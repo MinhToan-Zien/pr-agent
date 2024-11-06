@@ -38,7 +38,7 @@ def get_git_provider_with_context(pr_url) -> GitProvider:
     """
     Get a GitProvider instance for the given PR URL. If the GitProvider instance is already in the context, return it.
     """
-
+    get_logger().debug("pr_url: {pr_url}")
     is_context_env = None
     try:
         is_context_env = context.get("settings", None)
