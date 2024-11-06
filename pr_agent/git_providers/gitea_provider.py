@@ -610,11 +610,11 @@ class GiteaProvider(GitProvider):
     def _parse_pr_url(self, pr_url: str) -> Tuple[str, int]:
         parsed_url = urlparse(pr_url)
 
-        if parsed_url.path.startswith('/api/v3'):
-            parsed_url = urlparse(pr_url.replace("/api/v3", ""))
+        if parsed_url.path.startswith('/api/v1'):
+            parsed_url = urlparse(pr_url.replace("/api/v1", ""))
 
         path_parts = parsed_url.path.strip('/').split('/')
-        if 'api.github.com' in parsed_url.netloc or '/api/v3' in pr_url:
+        if '/api/v1' in pr_url:
             if len(path_parts) < 5 or path_parts[3] != 'pulls':
                 raise ValueError("The provided URL does not appear to be a GitHub PR URL")
             repo_name = '/'.join(path_parts[1:3])
@@ -638,11 +638,11 @@ class GiteaProvider(GitProvider):
     def _parse_issue_url(self, issue_url: str) -> Tuple[str, int]:
         parsed_url = urlparse(issue_url)
 
-        if 'github.com' not in parsed_url.netloc:
+        if 'gitea' not in parsed_url.netloc:
             raise ValueError("The provided URL is not a valid GitHub URL")
 
         path_parts = parsed_url.path.strip('/').split('/')
-        if 'api.github.com' in parsed_url.netloc:
+        if 'gitea' in parsed_url.netloc:
             if len(path_parts) < 5 or path_parts[3] != 'issues':
                 raise ValueError("The provided URL does not appear to be a GitHub ISSUE URL")
             repo_name = '/'.join(path_parts[1:3])
