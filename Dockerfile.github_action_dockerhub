@@ -1,1 +1,1 @@
-FROM dpminhtoan/qodo:github_action
+FROM dpminhtoan/qodo-ai:github_action
